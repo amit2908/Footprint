@@ -24,6 +24,7 @@ class AddNewViewController: UIViewController, MapManager {
     
     var userDidSelectLocationClosure : UserDidSelectLocationClosure?
     
+    let MARKER_HEIGHT : CGFloat = 20.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +52,19 @@ class AddNewViewController: UIViewController, MapManager {
     
     
     func setMapViewLocation(location: CLLocation) {
+        setMarkerOnMapView()
         centerViewOnLocation(mapView: self.mapView, location: location)
+    }
+    
+    private func setMarkerOnMapView(){
+        let image = UIImage(named: "marker")
+        let imgVMarker = UIImageView(image: image)
+        let mapViewBounds = self.mapView.bounds
+        let x = CGFloat(mapViewBounds.origin.x) + CGFloat(mapViewBounds.size.width/2) - MARKER_HEIGHT/2
+        let y = CGFloat(mapViewBounds.origin.y) + CGFloat(mapViewBounds.size.height/2) - MARKER_HEIGHT/2
+        imgVMarker.frame.origin = CGPoint(x:x , y: y)
+        imgVMarker.frame.size = CGSize(width: MARKER_HEIGHT, height: MARKER_HEIGHT)
+        self.mapView.addSubview(imgVMarker)
     }
     
     
